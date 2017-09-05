@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jxt.toolmanage.mapper.ToolMapper" >
+  <resultMap id="BaseResultMap" type="com.jxt.toolmanage.pojo.Tool" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="cid" property="cid" jdbcType="BIGINT" />
+    <result column="number" property="number" jdbcType="VARCHAR" />
+    <result column="tool_name" property="toolName" jdbcType="VARCHAR" />
+    <result column="test_period" property="testPeriod" jdbcType="INTEGER" />
+    <result column="last_test_date" property="lastTestDate" jdbcType="DATE" />
+    <result column="model_number" property="modelNumber" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="DATE" />
+    <result column="valid_use_period" property="validUsePeriod" jdbcType="INTEGER" />
+    <result column="keep_and_deposit_require" property="keepAndDepositRequire" jdbcType="VARCHAR" />
+    <result column="inspection_and_use_require" property="inspectionAndUseRequire" jdbcType="VARCHAR" />
+    <result column="is_qualified" property="isQualified" jdbcType="INTEGER" />
+    <result column="two_dimension_code" property="twoDimensionCode" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, cid, number, tool_name, test_period, last_test_date, model_number, create_date, 
+    valid_use_period, keep_and_deposit_require, inspection_and_use_require, is_qualified, 
+    two_dimension_code, status
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jxt.toolmanage.pojo.ToolExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tool
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tool
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tool
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.jxt.toolmanage.pojo.ToolExample" >
+    delete from tool
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.jxt.toolmanage.pojo.Tool" >
+  	<selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+  		SELECT LAST_INSERT_ID()
+  	</selectKey>
+    insert into tool (id, cid, number, 
+      tool_name, test_period, last_test_date, 
+      model_number, create_date, valid_use_period, 
+      keep_and_deposit_require, inspection_and_use_require, 
+      is_qualified, two_dimension_code, status
+      )
+    values (#{id,jdbcType=BIGINT}, #{cid,jdbcType=BIGINT}, #{number,jdbcType=VARCHAR}, 
+      #{toolName,jdbcType=VARCHAR}, #{testPeriod,jdbcType=INTEGER}, #{lastTestDate,jdbcType=DATE}, 
+      #{modelNumber,jdbcType=VARCHAR}, #{createDate,jdbcType=DATE}, #{validUsePeriod,jdbcType=INTEGER}, 
+      #{keepAndDepositRequire,jdbcType=VARCHAR}, #{inspectionAndUseRequire,jdbcType=VARCHAR}, 
+      #{isQualified,jdbcType=INTEGER}, #{twoDimensionCode,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.jxt.toolmanage.pojo.Tool" >
+    insert into tool
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="cid != null" >
+        cid,
+      </if>
+      <if test="number != null" >
+        number,
+      </if>
+      <if test="toolName != null" >
+        tool_name,
+      </if>
+      <if test="testPeriod != null" >
+        test_period,
+      </if>
+      <if test="lastTestDate != null" >
+        last_test_date,
+      </if>
+      <if test="modelNumber != null" >
+        model_number,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="validUsePeriod != null" >
+        valid_use_period,
+      </if>
+      <if test="keepAndDepositRequire != null" >
+        keep_and_deposit_require,
+      </if>
+      <if test="inspectionAndUseRequire != null" >
+        inspection_and_use_require,
+      </if>
+      <if test="isQualified != null" >
+        is_qualified,
+      </if>
+      <if test="twoDimensionCode != null" >
+        two_dimension_code,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="cid != null" >
+        #{cid,jdbcType=BIGINT},
+      </if>
+      <if test="number != null" >
+        #{number,jdbcType=VARCHAR},
+      </if>
+      <if test="toolName != null" >
+        #{toolName,jdbcType=VARCHAR},
+      </if>
+      <if test="testPeriod != null" >
+        #{testPeriod,jdbcType=INTEGER},
+      </if>
+      <if test="lastTestDate != null" >
+        #{lastTestDate,jdbcType=DATE},
+      </if>
+      <if test="modelNumber != null" >
+        #{modelNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=DATE},
+      </if>
+      <if test="validUsePeriod != null" >
+        #{validUsePeriod,jdbcType=INTEGER},
+      </if>
+      <if test="keepAndDepositRequire != null" >
+        #{keepAndDepositRequire,jdbcType=VARCHAR},
+      </if>
+      <if test="inspectionAndUseRequire != null" >
+        #{inspectionAndUseRequire,jdbcType=VARCHAR},
+      </if>
+      <if test="isQualified != null" >
+        #{isQualified,jdbcType=INTEGER},
+      </if>
+      <if test="twoDimensionCode != null" >
+        #{twoDimensionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.jxt.toolmanage.pojo.ToolExample" resultType="java.lang.Integer" >
+    select count(*) from tool
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tool
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.cid != null" >
+        cid = #{record.cid,jdbcType=BIGINT},
+      </if>
+      <if test="record.number != null" >
+        number = #{record.number,jdbcType=VARCHAR},
+      </if>
+      <if test="record.toolName != null" >
+        tool_name = #{record.toolName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.testPeriod != null" >
+        test_period = #{record.testPeriod,jdbcType=INTEGER},
+      </if>
+      <if test="record.lastTestDate != null" >
+        last_test_date = #{record.lastTestDate,jdbcType=DATE},
+      </if>
+      <if test="record.modelNumber != null" >
+        model_number = #{record.modelNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createDate != null" >
+        create_date = #{record.createDate,jdbcType=DATE},
+      </if>
+      <if test="record.validUsePeriod != null" >
+        valid_use_period = #{record.validUsePeriod,jdbcType=INTEGER},
+      </if>
+      <if test="record.keepAndDepositRequire != null" >
+        keep_and_deposit_require = #{record.keepAndDepositRequire,jdbcType=VARCHAR},
+      </if>
+      <if test="record.inspectionAndUseRequire != null" >
+        inspection_and_use_require = #{record.inspectionAndUseRequire,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isQualified != null" >
+        is_qualified = #{record.isQualified,jdbcType=INTEGER},
+      </if>
+      <if test="record.twoDimensionCode != null" >
+        two_dimension_code = #{record.twoDimensionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tool
+    set id = #{record.id,jdbcType=BIGINT},
+      cid = #{record.cid,jdbcType=BIGINT},
+      number = #{record.number,jdbcType=VARCHAR},
+      tool_name = #{record.toolName,jdbcType=VARCHAR},
+      test_period = #{record.testPeriod,jdbcType=INTEGER},
+      last_test_date = #{record.lastTestDate,jdbcType=DATE},
+      model_number = #{record.modelNumber,jdbcType=VARCHAR},
+      create_date = #{record.createDate,jdbcType=DATE},
+      valid_use_period = #{record.validUsePeriod,jdbcType=INTEGER},
+      keep_and_deposit_require = #{record.keepAndDepositRequire,jdbcType=VARCHAR},
+      inspection_and_use_require = #{record.inspectionAndUseRequire,jdbcType=VARCHAR},
+      is_qualified = #{record.isQualified,jdbcType=INTEGER},
+      two_dimension_code = #{record.twoDimensionCode,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.jxt.toolmanage.pojo.Tool" >
+    update tool
+    <set >
+      <if test="cid != null" >
+        cid = #{cid,jdbcType=BIGINT},
+      </if>
+      <if test="number != null" >
+        number = #{number,jdbcType=VARCHAR},
+      </if>
+      <if test="toolName != null" >
+        tool_name = #{toolName,jdbcType=VARCHAR},
+      </if>
+      <if test="testPeriod != null" >
+        test_period = #{testPeriod,jdbcType=INTEGER},
+      </if>
+      <if test="lastTestDate != null" >
+        last_test_date = #{lastTestDate,jdbcType=DATE},
+      </if>
+      <if test="modelNumber != null" >
+        model_number = #{modelNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=DATE},
+      </if>
+      <if test="validUsePeriod != null" >
+        valid_use_period = #{validUsePeriod,jdbcType=INTEGER},
+      </if>
+      <if test="keepAndDepositRequire != null" >
+        keep_and_deposit_require = #{keepAndDepositRequire,jdbcType=VARCHAR},
+      </if>
+      <if test="inspectionAndUseRequire != null" >
+        inspection_and_use_require = #{inspectionAndUseRequire,jdbcType=VARCHAR},
+      </if>
+      <if test="isQualified != null" >
+        is_qualified = #{isQualified,jdbcType=INTEGER},
+      </if>
+      <if test="twoDimensionCode != null" >
+        two_dimension_code = #{twoDimensionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.jxt.toolmanage.pojo.Tool" >
+    update tool
+    set cid = #{cid,jdbcType=BIGINT},
+      number = #{number,jdbcType=VARCHAR},
+      tool_name = #{toolName,jdbcType=VARCHAR},
+      test_period = #{testPeriod,jdbcType=INTEGER},
+      last_test_date = #{lastTestDate,jdbcType=DATE},
+      model_number = #{modelNumber,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=DATE},
+      valid_use_period = #{validUsePeriod,jdbcType=INTEGER},
+      keep_and_deposit_require = #{keepAndDepositRequire,jdbcType=VARCHAR},
+      inspection_and_use_require = #{inspectionAndUseRequire,jdbcType=VARCHAR},
+      is_qualified = #{isQualified,jdbcType=INTEGER},
+      two_dimension_code = #{twoDimensionCode,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
