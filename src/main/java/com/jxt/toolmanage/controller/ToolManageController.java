@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -46,8 +48,9 @@ public class ToolManageController {
 	 */
 	@RequestMapping("/tool/addTools")
 	@ResponseBody
-	public JxtResult addTools(ToolVo toolVo) {
-		return null;
+	public JxtResult addTools(ToolVo toolVo) throws Exception {
+		JxtResult result = toolManageService.addTools(toolVo);
+		return result;
 	}
 	
 	/*
@@ -55,8 +58,9 @@ public class ToolManageController {
 	 */
 	@RequestMapping("/tool/editTool")
 	@ResponseBody
-	public JxtResult editTool(Tool tool) {
-		return null;
+	public JxtResult editTool(@Validated Tool tool,BindingResult bindingResult) throws Exception {
+		JxtResult result = toolManageService.editTool(tool);
+		return result;
 	}
 	
 	/*

@@ -12,6 +12,7 @@ import javax.imageio.ImageIO;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 
 public class QRCode {
@@ -57,10 +58,11 @@ public class QRCode {
 	 * @param height高
 	 * @param format图片格式
 	 * @return 生成的二维码图片路径
+	 * @throws Exception 
 	 * @throws Exception
 	 */
 	public static String generateQRCode(String text, int width, int height,
-			String format) throws Exception {
+			String format) throws Exception  {
 		Hashtable<EncodeHintType, Object> hints = new Hashtable<EncodeHintType, Object>();
 		hints.put(EncodeHintType.CHARACTER_SET, "utf-8");
 		BitMatrix bitMatrix = new MultiFormatWriter().encode(text,

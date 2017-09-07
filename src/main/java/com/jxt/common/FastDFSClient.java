@@ -40,7 +40,7 @@ public class FastDFSClient {
 		return result;
 	}
 	
-	public String uploadFile(String fileName) throws Exception {
+	public String uploadFile(String fileName) throws Exception  {
 		return uploadFile(fileName, null, null);
 	}
 	
