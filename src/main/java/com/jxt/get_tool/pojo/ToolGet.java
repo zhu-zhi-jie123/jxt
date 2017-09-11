@@ -2,28 +2,30 @@ package com.jxt.get_tool.pojo;
 
 import java.util.Date;
 
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class ToolGet {
-    private Long id;
+    private Long id;  //主键
+    @NotEmpty(message="{get_tool.toolids.isNull}")
+    private String toolids;  //所领工器具id
+    @NotEmpty(message="{get_tool.noteNum.isNull}")
+    private String noteNum;  //票据号码
+    @NotNull(message="{get_tool.getDate.isNull}")
+    private Date getDate;  //领用日期
+    @NotNull(message="{get_tool.returnDate.isNull}")
+    private Date returnDate;  //归还日期
+    @NotEmpty(message="{get_tool.userName.isNull}")
+    private String userName;  //领用人
+    @NotEmpty(message="{get_tool.workingPlace.isNull}")
+    private String workingPlace;  //工作地点
 
-    private Long toolid;
-
-    private String noteNum;
-
-    private Date getDate;
-
-    private Date returnDate;
-
-    private Long userId;
-
-    private String getToolName;
-
-    private String workingPlace;
-
-    private String workingContent;
-
-    private Date workBeginDate;
-
-    private Date workEndDate;
+    private String workingContent;  //工作内容
+    @NotNull(message="{get_tool.workBeginDate.isNull}")
+    private Date workBeginDate;  //工作开始日期
+    @NotNull(message="{get_tool.workEndDate.isNull}")
+    private Date workEndDate;  //工作结束日期
 
     public Long getId() {
         return id;
@@ -33,12 +35,12 @@ public class ToolGet {
         this.id = id;
     }
 
-    public Long getToolid() {
-        return toolid;
+    public String getToolids() {
+        return toolids;
     }
 
-    public void setToolid(Long toolid) {
-        this.toolid = toolid;
+    public void setToolids(String toolids) {
+        this.toolids = toolids == null ? null : toolids.trim();
     }
 
     public String getNoteNum() {
@@ -65,20 +67,12 @@ public class ToolGet {
         this.returnDate = returnDate;
     }
 
-    public Long getUserId() {
-        return userId;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public String getGetToolName() {
-        return getToolName;
-    }
-
-    public void setGetToolName(String getToolName) {
-        this.getToolName = getToolName == null ? null : getToolName.trim();
+    public void setUserName(String userName) {
+        this.userName = userName == null ? null : userName.trim();
     }
 
     public String getWorkingPlace() {

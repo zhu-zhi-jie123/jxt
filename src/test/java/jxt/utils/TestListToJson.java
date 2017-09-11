@@ -9,7 +9,7 @@ import org.junit.Test;
 import com.jxt.toolmanage.pojo.Tool;
 import com.jxt.utils.JsonUtils;
 
-public class testListToJson {
+public class TestListToJson {
 
 	@Test
 	public void testListToJson() {

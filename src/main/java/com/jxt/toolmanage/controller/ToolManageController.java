@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.jxt.toolmanage.pojo.Tool;
 import com.jxt.toolmanage.pojo.ToolVo;
 import com.jxt.toolmanage.service.ToolManageService;
+import com.jxt.toolmanage.validation.ValidGroup1;
+import com.jxt.toolmanage.validation.ValidGroup2;
 import com.jxt.utils.JxtResult;
 
 /*
@@ -38,7 +40,10 @@ public class ToolManageController {
 	 */
 	@RequestMapping("/tool/addTool")
 	@ResponseBody
-	public JxtResult addTool(Tool tool) throws Exception {
+	public JxtResult addTool(@Validated(value={ValidGroup2.class}) Tool tool,BindingResult bindingResult) throws Exception {
+		if(bindingResult.hasErrors()) {
+			return JxtResult.build(500, "必填项不能为空！", tool);
+		}
 		JxtResult result = toolManageService.addTool(tool);
 		return result;
 	}
@@ -48,7 +53,10 @@ public class ToolManageController {
 	 */
 	@RequestMapping("/tool/addTools")
 	@ResponseBody
-	public JxtResult addTools(ToolVo toolVo) throws Exception {
+	public JxtResult addTools(@Validated(value={ValidGroup2.class}) ToolVo toolVo,BindingResult bindingResult) throws Exception {
+		if(bindingResult.hasErrors()) {
+			return JxtResult.build(500, "必填项不能为空！", toolVo.getToolList());
+		}
 		JxtResult result = toolManageService.addTools(toolVo);
 		return result;
 	}
@@ -58,7 +66,10 @@ public class ToolManageController {
 	 */
 	@RequestMapping("/tool/editTool")
 	@ResponseBody
-	public JxtResult editTool(@Validated Tool tool,BindingResult bindingResult) throws Exception {
+	public JxtResult editTool(@Validated(value={ValidGroup1.class}) Tool tool,BindingResult bindingResult) throws Exception {
+		if(bindingResult.hasErrors()) {
+			return JxtResult.build(500, "必填项不能为空！", tool);
+		}
 		JxtResult result = toolManageService.editTool(tool);
 		return result;
 	}
@@ -68,8 +79,12 @@ public class ToolManageController {
 	 */
 	@RequestMapping("/tool/editTools")
 	@ResponseBody
-	public JxtResult editTools(ToolVo toolVo) {
-		return null;
+	public JxtResult editTools(@Validated(value={ValidGroup1.class}) ToolVo toolVo,BindingResult bindingResult) throws Exception {
+		if(bindingResult.hasErrors()) {
+			return JxtResult.build(500, "必填项不能为空！", toolVo.getToolList());
+		}
+		JxtResult result = toolManageService.editTools(toolVo);
+		return result;
 	}
 	
 	/*

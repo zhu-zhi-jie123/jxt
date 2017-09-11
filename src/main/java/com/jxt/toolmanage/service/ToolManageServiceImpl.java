@@ -1,11 +1,10 @@
 package com.jxt.toolmanage.service;
 
+import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
 import com.jxt.common.FastDFSClient;
 import com.jxt.toolmanage.mapper.ToolMapper;
 import com.jxt.toolmanage.pojo.QRCodeInfo;
@@ -163,6 +162,36 @@ public class ToolManageServiceImpl implements ToolManageService {
 		//查询编辑后的工器具信息
 		Tool toolResult = toolMapper.selectByPrimaryKey(tool.getId());
 		return JxtResult.build(200, "编辑成功！", toolResult);
+	}
+
+	/*
+	 * 批量编辑工器具(non-Javadoc)
+	 * @see com.jxt.toolmanage.service.ToolManageService#editTools(com.jxt.toolmanage.pojo.ToolVo)
+	 */
+	@Override
+	public JxtResult editTools(ToolVo toolVo) throws Exception {
+		//编辑后的工器具信息的List
+		List<Tool> toolList = new ArrayList<Tool>();
+		//遍历需要编辑的工器具列表并逐个编辑
+		for (Tool tool : toolVo.getToolList()) {
+			//使用用户编辑后的数据创建二维码信息对象
+			QRCodeInfo qrCodeInfo = new QRCodeInfo(tool);
+			//将对象转换成json数据
+			String jsonData = JsonUtils.objectToJson(qrCodeInfo);
+			//使用新的信息生成二维码
+			String generateQRCode = QRCode.generateQRCode(jsonData, QRCODE_WIDTH, QRCODE_HEIGHT, QRCODE_FORMAT);
+			//上传二维码图片到图片服务器
+			FastDFSClient fastDFSClient = new FastDFSClient("classpath:client.conf");
+			String QRCodePath = fastDFSClient.uploadFile(generateQRCode);
+			//设置二维码图片路径
+			tool.setTwoDimensionCode(IMAGE_SERVER_URL+QRCodePath);
+			//编辑
+			toolMapper.updateByPrimaryKeySelective(tool);
+			//查询编辑后的工器具信息
+			Tool toolResult = toolMapper.selectByPrimaryKey(tool.getId());
+			toolList.add(toolResult);
+		}
+		return JxtResult.build(200, "编辑成功！", toolList);
 	}
 	
 }

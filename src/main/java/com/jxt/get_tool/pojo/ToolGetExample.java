@@ -165,63 +165,73 @@ public class ToolGetExample {
             return (Criteria) this;
         }
 
-        public Criteria andToolidIsNull() {
-            addCriterion("toolId is null");
+        public Criteria andToolidsIsNull() {
+            addCriterion("toolIds is null");
             return (Criteria) this;
         }
 
-        public Criteria andToolidIsNotNull() {
-            addCriterion("toolId is not null");
+        public Criteria andToolidsIsNotNull() {
+            addCriterion("toolIds is not null");
             return (Criteria) this;
         }
 
-        public Criteria andToolidEqualTo(Long value) {
-            addCriterion("toolId =", value, "toolid");
+        public Criteria andToolidsEqualTo(String value) {
+            addCriterion("toolIds =", value, "toolids");
             return (Criteria) this;
         }
 
-        public Criteria andToolidNotEqualTo(Long value) {
-            addCriterion("toolId <>", value, "toolid");
+        public Criteria andToolidsNotEqualTo(String value) {
+            addCriterion("toolIds <>", value, "toolids");
             return (Criteria) this;
         }
 
-        public Criteria andToolidGreaterThan(Long value) {
-            addCriterion("toolId >", value, "toolid");
+        public Criteria andToolidsGreaterThan(String value) {
+            addCriterion("toolIds >", value, "toolids");
             return (Criteria) this;
         }
 
-        public Criteria andToolidGreaterThanOrEqualTo(Long value) {
-            addCriterion("toolId >=", value, "toolid");
+        public Criteria andToolidsGreaterThanOrEqualTo(String value) {
+            addCriterion("toolIds >=", value, "toolids");
             return (Criteria) this;
         }
 
-        public Criteria andToolidLessThan(Long value) {
-            addCriterion("toolId <", value, "toolid");
+        public Criteria andToolidsLessThan(String value) {
+            addCriterion("toolIds <", value, "toolids");
             return (Criteria) this;
         }
 
-        public Criteria andToolidLessThanOrEqualTo(Long value) {
-            addCriterion("toolId <=", value, "toolid");
+        public Criteria andToolidsLessThanOrEqualTo(String value) {
+            addCriterion("toolIds <=", value, "toolids");
             return (Criteria) this;
         }
 
-        public Criteria andToolidIn(List<Long> values) {
-            addCriterion("toolId in", values, "toolid");
+        public Criteria andToolidsLike(String value) {
+            addCriterion("toolIds like", value, "toolids");
             return (Criteria) this;
         }
 
-        public Criteria andToolidNotIn(List<Long> values) {
-            addCriterion("toolId not in", values, "toolid");
+        public Criteria andToolidsNotLike(String value) {
+            addCriterion("toolIds not like", value, "toolids");
             return (Criteria) this;
         }
 
-        public Criteria andToolidBetween(Long value1, Long value2) {
-            addCriterion("toolId between", value1, value2, "toolid");
+        public Criteria andToolidsIn(List<String> values) {
+            addCriterion("toolIds in", values, "toolids");
             return (Criteria) this;
         }
 
-        public Criteria andToolidNotBetween(Long value1, Long value2) {
-            addCriterion("toolId not between", value1, value2, "toolid");
+        public Criteria andToolidsNotIn(List<String> values) {
+            addCriterion("toolIds not in", values, "toolids");
+            return (Criteria) this;
+        }
+
+        public Criteria andToolidsBetween(String value1, String value2) {
+            addCriterion("toolIds between", value1, value2, "toolids");
+            return (Criteria) this;
+        }
+
+        public Criteria andToolidsNotBetween(String value1, String value2) {
+            addCriterion("toolIds not between", value1, value2, "toolids");
             return (Criteria) this;
         }
 
@@ -415,133 +425,73 @@ public class ToolGetExample {
             return (Criteria) this;
         }
 
-        public Criteria andUserIdIsNull() {
-            addCriterion("user_id is null");
+        public Criteria andUserNameIsNull() {
+            addCriterion("user_name is null");
             return (Criteria) this;
         }
 
-        public Criteria andUserIdIsNotNull() {
-            addCriterion("user_id is not null");
+        public Criteria andUserNameIsNotNull() {
+            addCriterion("user_name is not null");
             return (Criteria) this;
         }
 
-        public Criteria andUserIdEqualTo(Long value) {
-            addCriterion("user_id =", value, "userId");
+        public Criteria andUserNameEqualTo(String value) {
+            addCriterion("user_name =", value, "userName");
             return (Criteria) this;
         }
 
-        public Criteria andUserIdNotEqualTo(Long value) {
-            addCriterion("user_id <>", value, "userId");
+        public Criteria andUserNameNotEqualTo(String value) {
+            addCriterion("user_name <>", value, "userName");
             return (Criteria) this;
         }
 
-        public Criteria andUserIdGreaterThan(Long value) {
-            addCriterion("user_id >", value, "userId");
+        public Criteria andUserNameGreaterThan(String value) {
+            addCriterion("user_name >", value, "userName");
             return (Criteria) this;
         }
 
-        public Criteria andUserIdGreaterThanOrEqualTo(Long value) {
-            addCriterion("user_id >=", value, "userId");
+        public Criteria andUserNameGreaterThanOrEqualTo(String value) {
+            addCriterion("user_name >=", value, "userName");
             return (Criteria) this;
         }
 
-        public Criteria andUserIdLessThan(Long value) {
-            addCriterion("user_id <", value, "userId");
+        public Criteria andUserNameLessThan(String value) {
+            addCriterion("user_name <", value, "userName");
             return (Criteria) this;
         }
 
-        public Criteria andUserIdLessThanOrEqualTo(Long value) {
-            addCriterion("user_id <=", value, "userId");
+        public Criteria andUserNameLessThanOrEqualTo(String value) {
+            addCriterion("user_name <=", value, "userName");
             return (Criteria) this;
         }
 
-        public Criteria andUserIdIn(List<Long> values) {
-            addCriterion("user_id in", values, "userId");
+        public Criteria andUserNameLike(String value) {
+            addCriterion("user_name like", value, "userName");
             return (Criteria) this;
         }
 
-        public Criteria andUserIdNotIn(List<Long> values) {
-            addCriterion("user_id not in", values, "userId");
+        public Criteria andUserNameNotLike(String value) {
+            addCriterion("user_name not like", value, "userName");
             return (Criteria) this;
         }
 
-        public Criteria andUserIdBetween(Long value1, Long value2) {
-            addCriterion("user_id between", value1, value2, "userId");
+        public Criteria andUserNameIn(List<String> values) {
+            addCriterion("user_name in", values, "userName");
             return (Criteria) this;
         }
 
-        public Criteria andUserIdNotBetween(Long value1, Long value2) {
-            addCriterion("user_id not between", value1, value2, "userId");
+        public Criteria andUserNameNotIn(List<String> values) {
+            addCriterion("user_name not in", values, "userName");
             return (Criteria) this;
         }
 
-        public Criteria andGetToolNameIsNull() {
-            addCriterion("get_tool_name is null");
+        public Criteria andUserNameBetween(String value1, String value2) {
+            addCriterion("user_name between", value1, value2, "userName");
             return (Criteria) this;
         }
 
-        public Criteria andGetToolNameIsNotNull() {
-            addCriterion("get_tool_name is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andGetToolNameEqualTo(String value) {
-            addCriterion("get_tool_name =", value, "getToolName");
-            return (Criteria) this;
-        }
-
-        public Criteria andGetToolNameNotEqualTo(String value) {
-            addCriterion("get_tool_name <>", value, "getToolName");
-            return (Criteria) this;
-        }
-
-        public Criteria andGetToolNameGreaterThan(String value) {
-            addCriterion("get_tool_name >", value, "getToolName");
-            return (Criteria) this;
-        }
-
-        public Criteria andGetToolNameGreaterThanOrEqualTo(String value) {
-            addCriterion("get_tool_name >=", value, "getToolName");
-            return (Criteria) this;
-        }
-
-        public Criteria andGetToolNameLessThan(String value) {
-            addCriterion("get_tool_name <", value, "getToolName");
-            return (Criteria) this;
-        }
-
-        public Criteria andGetToolNameLessThanOrEqualTo(String value) {
-            addCriterion("get_tool_name <=", value, "getToolName");
-            return (Criteria) this;
-        }
-
-        public Criteria andGetToolNameLike(String value) {
-            addCriterion("get_tool_name like", value, "getToolName");
-            return (Criteria) this;
-        }
-
-        public Criteria andGetToolNameNotLike(String value) {
-            addCriterion("get_tool_name not like", value, "getToolName");
-            return (Criteria) this;
-        }
-
-        public Criteria andGetToolNameIn(List<String> values) {
-            addCriterion("get_tool_name in", values, "getToolName");
-            return (Criteria) this;
-        }
-
-        public Criteria andGetToolNameNotIn(List<String> values) {
-            addCriterion("get_tool_name not in", values, "getToolName");
-            return (Criteria) this;
-        }
-
-        public Criteria andGetToolNameBetween(String value1, String value2) {
-            addCriterion("get_tool_name between", value1, value2, "getToolName");
-            return (Criteria) this;
-        }
-
-        public Criteria andGetToolNameNotBetween(String value1, String value2) {
-            addCriterion("get_tool_name not between", value1, value2, "getToolName");
+        public Criteria andUserNameNotBetween(String value1, String value2) {
+            addCriterion("user_name not between", value1, value2, "userName");
             return (Criteria) this;
         }
 

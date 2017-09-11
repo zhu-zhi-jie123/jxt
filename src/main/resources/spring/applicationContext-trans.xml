@@ -34,10 +34,11 @@
 		<aop:pointcut id="pointcut1" expression="execution(* com.jxt.user.service.*.*(..))"/>
 		<aop:pointcut id="pointcut2" expression="execution(* com.jxt.category.service.*.*(..))"/>
 		<aop:pointcut id="pointcut3" expression="execution(* com.jxt.toolmanage.service.*.*(..))"/>
+		<aop:pointcut id="pointcut4" expression="execution(* com.jxt.get_tool.service.*.*(..))"/>
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="pointcut1"/>
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="pointcut2" />
-		<!-- <aop:advisor advice-ref="txAdvice" pointcut="execution(* com.jxt.get_tool.service.*.*(..))" /> -->
 		<aop:advisor advice-ref="txAdvice" pointcut-ref="pointcut3" />
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="pointcut4" />
 	</aop:config>
 	
 </beans>

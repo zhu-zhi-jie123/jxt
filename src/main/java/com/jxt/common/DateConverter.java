@@ -8,6 +8,9 @@ import org.springframework.core.convert.converter.Converter;
 public class DateConverter implements Converter<String, Date> {
 
 	public Date convert(String source) {
+		if(source==null || source.equals("")) {
+			return null;
+		}
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = null;
 		try {

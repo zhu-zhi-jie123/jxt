@@ -1,9 +1,6 @@
 package com.jxt.toolmanage.service;
 
 import java.util.List;
-
-import org.springframework.validation.BindingResult;
-
 import com.jxt.toolmanage.pojo.Tool;
 import com.jxt.toolmanage.pojo.ToolVo;
 import com.jxt.utils.JxtResult;
@@ -16,4 +13,5 @@ public interface ToolManageService {
 	JxtResult addTool(Tool tool) throws Exception;
 	JxtResult addTools(ToolVo toolVo) throws Exception;
 	JxtResult editTool(Tool tool) throws Exception;
+	JxtResult editTools(ToolVo toolVo) throws Exception;
 }

@@ -11,6 +11,6 @@
 	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.2.xsd">
 				
 	<!-- 配置包扫描器，扫描所有带@Service注解的类 -->
-	<context:component-scan base-package="com.jxt.user.service,com.jxt.category.service,com.jxt.toolmanage.service"/>
+	<context:component-scan base-package="com.jxt.user.service,com.jxt.category.service,com.jxt.toolmanage.service,com.jxt.get_tool.service"/>
 	
 </beans>

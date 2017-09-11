@@ -3,12 +3,11 @@
 <mapper namespace="com.jxt.get_tool.mapper.ToolGetMapper" >
   <resultMap id="BaseResultMap" type="com.jxt.get_tool.pojo.ToolGet" >
     <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="toolId" property="toolid" jdbcType="BIGINT" />
+    <result column="toolIds" property="toolids" jdbcType="VARCHAR" />
     <result column="note_num" property="noteNum" jdbcType="VARCHAR" />
     <result column="get_date" property="getDate" jdbcType="TIMESTAMP" />
     <result column="return_date" property="returnDate" jdbcType="TIMESTAMP" />
-    <result column="user_id" property="userId" jdbcType="BIGINT" />
-    <result column="get_tool_name" property="getToolName" jdbcType="VARCHAR" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
     <result column="working_place" property="workingPlace" jdbcType="VARCHAR" />
     <result column="working_content" property="workingContent" jdbcType="VARCHAR" />
     <result column="work_begin_date" property="workBeginDate" jdbcType="TIMESTAMP" />
@@ -73,8 +72,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    id, toolId, note_num, get_date, return_date, user_id, get_tool_name, working_place, 
-    working_content, work_begin_date, work_end_date
+    id, toolIds, note_num, get_date, return_date, user_name, working_place, working_content, 
+    work_begin_date, work_end_date
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.jxt.get_tool.pojo.ToolGetExample" >
     select
@@ -107,23 +106,29 @@
     </if>
   </delete>
   <insert id="insert" parameterType="com.jxt.get_tool.pojo.ToolGet" >
-    insert into tool_get (id, toolId, note_num, 
-      get_date, return_date, user_id, 
-      get_tool_name, working_place, working_content, 
-      work_begin_date, work_end_date)
-    values (#{id,jdbcType=BIGINT}, #{toolid,jdbcType=BIGINT}, #{noteNum,jdbcType=VARCHAR}, 
-      #{getDate,jdbcType=TIMESTAMP}, #{returnDate,jdbcType=TIMESTAMP}, #{userId,jdbcType=BIGINT}, 
-      #{getToolName,jdbcType=VARCHAR}, #{workingPlace,jdbcType=VARCHAR}, #{workingContent,jdbcType=VARCHAR}, 
-      #{workBeginDate,jdbcType=TIMESTAMP}, #{workEndDate,jdbcType=TIMESTAMP})
+  	<selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+  		SELECT LAST_INSERT_ID()
+  	</selectKey>
+    insert into tool_get (id, toolIds, note_num, 
+      get_date, return_date, user_name, 
+      working_place, working_content, work_begin_date, 
+      work_end_date)
+    values (#{id,jdbcType=BIGINT}, #{toolids,jdbcType=VARCHAR}, #{noteNum,jdbcType=VARCHAR}, 
+      #{getDate,jdbcType=TIMESTAMP}, #{returnDate,jdbcType=TIMESTAMP}, #{userName,jdbcType=VARCHAR}, 
+      #{workingPlace,jdbcType=VARCHAR}, #{workingContent,jdbcType=VARCHAR}, #{workBeginDate,jdbcType=TIMESTAMP}, 
+      #{workEndDate,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.jxt.get_tool.pojo.ToolGet" >
+  	<selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+  		SELECT LAST_INSERT_ID()
+  	</selectKey>
     insert into tool_get
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
       </if>
-      <if test="toolid != null" >
-        toolId,
+      <if test="toolids != null" >
+        toolIds,
       </if>
       <if test="noteNum != null" >
         note_num,
@@ -134,11 +139,8 @@
       <if test="returnDate != null" >
         return_date,
       </if>
-      <if test="userId != null" >
-        user_id,
-      </if>
-      <if test="getToolName != null" >
-        get_tool_name,
+      <if test="userName != null" >
+        user_name,
       </if>
       <if test="workingPlace != null" >
         working_place,
@@ -157,8 +159,8 @@
       <if test="id != null" >
         #{id,jdbcType=BIGINT},
       </if>
-      <if test="toolid != null" >
-        #{toolid,jdbcType=BIGINT},
+      <if test="toolids != null" >
+        #{toolids,jdbcType=VARCHAR},
       </if>
       <if test="noteNum != null" >
         #{noteNum,jdbcType=VARCHAR},
@@ -169,11 +171,8 @@
       <if test="returnDate != null" >
         #{returnDate,jdbcType=TIMESTAMP},
       </if>
-      <if test="userId != null" >
-        #{userId,jdbcType=BIGINT},
-      </if>
-      <if test="getToolName != null" >
-        #{getToolName,jdbcType=VARCHAR},
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
       </if>
       <if test="workingPlace != null" >
         #{workingPlace,jdbcType=VARCHAR},
@@ -201,8 +200,8 @@
       <if test="record.id != null" >
         id = #{record.id,jdbcType=BIGINT},
       </if>
-      <if test="record.toolid != null" >
-        toolId = #{record.toolid,jdbcType=BIGINT},
+      <if test="record.toolids != null" >
+        toolIds = #{record.toolids,jdbcType=VARCHAR},
       </if>
       <if test="record.noteNum != null" >
         note_num = #{record.noteNum,jdbcType=VARCHAR},
@@ -213,11 +212,8 @@
       <if test="record.returnDate != null" >
         return_date = #{record.returnDate,jdbcType=TIMESTAMP},
       </if>
-      <if test="record.userId != null" >
-        user_id = #{record.userId,jdbcType=BIGINT},
-      </if>
-      <if test="record.getToolName != null" >
-        get_tool_name = #{record.getToolName,jdbcType=VARCHAR},
+      <if test="record.userName != null" >
+        user_name = #{record.userName,jdbcType=VARCHAR},
       </if>
       <if test="record.workingPlace != null" >
         working_place = #{record.workingPlace,jdbcType=VARCHAR},
@@ -239,12 +235,11 @@
   <update id="updateByExample" parameterType="map" >
     update tool_get
     set id = #{record.id,jdbcType=BIGINT},
-      toolId = #{record.toolid,jdbcType=BIGINT},
+      toolIds = #{record.toolids,jdbcType=VARCHAR},
       note_num = #{record.noteNum,jdbcType=VARCHAR},
       get_date = #{record.getDate,jdbcType=TIMESTAMP},
       return_date = #{record.returnDate,jdbcType=TIMESTAMP},
-      user_id = #{record.userId,jdbcType=BIGINT},
-      get_tool_name = #{record.getToolName,jdbcType=VARCHAR},
+      user_name = #{record.userName,jdbcType=VARCHAR},
       working_place = #{record.workingPlace,jdbcType=VARCHAR},
       working_content = #{record.workingContent,jdbcType=VARCHAR},
       work_begin_date = #{record.workBeginDate,jdbcType=TIMESTAMP},
@@ -256,8 +251,8 @@
   <update id="updateByPrimaryKeySelective" parameterType="com.jxt.get_tool.pojo.ToolGet" >
     update tool_get
     <set >
-      <if test="toolid != null" >
-        toolId = #{toolid,jdbcType=BIGINT},
+      <if test="toolids != null" >
+        toolIds = #{toolids,jdbcType=VARCHAR},
       </if>
       <if test="noteNum != null" >
         note_num = #{noteNum,jdbcType=VARCHAR},
@@ -268,11 +263,8 @@
       <if test="returnDate != null" >
         return_date = #{returnDate,jdbcType=TIMESTAMP},
       </if>
-      <if test="userId != null" >
-        user_id = #{userId,jdbcType=BIGINT},
-      </if>
-      <if test="getToolName != null" >
-        get_tool_name = #{getToolName,jdbcType=VARCHAR},
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
       </if>
       <if test="workingPlace != null" >
         working_place = #{workingPlace,jdbcType=VARCHAR},
@@ -291,12 +283,11 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="com.jxt.get_tool.pojo.ToolGet" >
     update tool_get
-    set toolId = #{toolid,jdbcType=BIGINT},
+    set toolIds = #{toolids,jdbcType=VARCHAR},
       note_num = #{noteNum,jdbcType=VARCHAR},
       get_date = #{getDate,jdbcType=TIMESTAMP},
       return_date = #{returnDate,jdbcType=TIMESTAMP},
-      user_id = #{userId,jdbcType=BIGINT},
-      get_tool_name = #{getToolName,jdbcType=VARCHAR},
+      user_name = #{userName,jdbcType=VARCHAR},
       working_place = #{workingPlace,jdbcType=VARCHAR},
       working_content = #{workingContent,jdbcType=VARCHAR},
       work_begin_date = #{workBeginDate,jdbcType=TIMESTAMP},

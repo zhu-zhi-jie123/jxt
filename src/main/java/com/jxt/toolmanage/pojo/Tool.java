@@ -4,35 +4,38 @@ import java.util.Date;
 
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import com.jxt.toolmanage.validation.ValidGroup1;
+import com.jxt.toolmanage.validation.ValidGroup2;
 
 public class Tool {
     private Long id;  //主键
-    @NotNull(message="{tool.cid.isNull}")
+    @NotNull(message="{tool.cid.isNull}",groups={ValidGroup2.class})
     private Long cid;  //所属分类id
-    @NotNull(message="{tool.number.isNull}",groups={ValidGroup1.class})
+    @NotEmpty(message="{tool.number.isNull}",groups={ValidGroup1.class,ValidGroup2.class})
     private String number;  //编号
-    @NotNull(message="{tool.toolName.isNull}",groups={ValidGroup1.class})
+    @NotEmpty(message="{tool.toolName.isNull}",groups={ValidGroup1.class,ValidGroup2.class})
     private String toolName;  //工器具名称
-    @NotNull(message="{tool.testPeriod.isNull}",groups={ValidGroup1.class})
+    @NotNull(message="{tool.testPeriod.isNull}",groups={ValidGroup1.class,ValidGroup2.class})
     private Integer testPeriod;  //测试周期
-    @NotNull(message="{tool.lastTestDate.isNull}")
+    @NotNull(message="{tool.lastTestDate.isNull}",groups={ValidGroup1.class,ValidGroup2.class})
     private Date lastTestDate;  //上次测试日期
-    @NotNull(message="{tool.modelNumber.isNull}",groups={ValidGroup1.class})
+    @NotEmpty(message="{tool.modelNumber.isNull}",groups={ValidGroup1.class,ValidGroup2.class})
     private String modelNumber;  //规格型号
-    @NotNull(message="{tool.createDate.isNull}",groups={ValidGroup1.class})
+    @NotNull(message="{tool.createDate.isNull}",groups={ValidGroup1.class,ValidGroup2.class})
     private Date createDate;  //出厂日期
-    @NotNull(message="{tool.validUsePeriod.isNull}",groups={ValidGroup1.class})
+    @NotNull(message="{tool.validUsePeriod.isNull}",groups={ValidGroup1.class,ValidGroup2.class})
     private Integer validUsePeriod;  //有效使用周期
 
     private String keepAndDepositRequire;  //保管与存放要求
 
     private String inspectionAndUseRequire;  //检查与使用要求
-    @NotNull(message="{tool.isQualified.isNull}")
+    @NotNull(message="{tool.isQualified.isNull}",groups={ValidGroup1.class})
     private Integer isQualified;  //是否合格   0:合格，1:不合格
-    @NotNull(message="{tool.twoDimensionCode.isNull}")
+    
     private String twoDimensionCode;  //二维码图片路径
-    @NotNull(message="{tool.status.isNull}")
+    
     private Integer status;  //状态  0:正常，1:待试验，2:正在试验，3:待报废，4:已报废，5:未被领用，6:被领用
 
     public Long getId() {
