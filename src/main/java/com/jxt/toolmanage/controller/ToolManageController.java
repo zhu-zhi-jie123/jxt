@@ -31,8 +31,8 @@ public class ToolManageController {
 	@RequestMapping("/tool/getToolsByCid")
 	@ResponseBody
 	public List<Tool> getToolsByCid(Long cid) {
-		List<Tool> toolList = toolManageService.getToolsByCid(cid);
-		return toolList;
+		List<Tool> tools = toolManageService.getToolsByCid(cid);
+		return tools;
 	}
 	
 	/*
@@ -104,8 +104,8 @@ public class ToolManageController {
 	@RequestMapping("/tool/getToolByStatus")
 	@ResponseBody
 	public List<Tool> getToolByStatus(int status) {
-		List<Tool> toolList = toolManageService.getToolByStatus(status);
-		return toolList;
+		List<Tool> tools = toolManageService.getToolByStatus(status);
+		return tools;
 	}
 	
 	/*
@@ -115,6 +115,31 @@ public class ToolManageController {
 	@ResponseBody
 	public JxtResult updateStatusById(Long id,int status) {
 		JxtResult result = toolManageService.updateStatusById(id, status);
+		return result;
+	}
+	
+	/*
+	 * 查询所有工器具
+	 */
+	@RequestMapping("/tool/getAllTools")
+	@ResponseBody
+	public List<Tool> getAllTools() {
+		List<Tool> tools = toolManageService.getAllTools();
+		return tools;
+	}
+	
+	/*
+	 * 以excel格式导出工器具信息
+	 */
+	@RequestMapping("/tool/exportExcel")
+	@ResponseBody
+	public JxtResult exportExcel(String path) {
+		JxtResult result;
+		try {
+			result = toolManageService.exportExcel(path);
+		} catch (Exception e) {
+			return JxtResult.build(500, "导出失败！");
+		}
 		return result;
 	}
 	

@@ -141,6 +141,15 @@ public class TestToolManageServiceImpl {
 		System.out.println(((Tool)result.getData()).getInspectionAndUseRequire());
 		System.out.println(((Tool)result.getData()).getNumber());
 	}
+	
+	/*
+	 * 测试以excel格式导出工器具信息
+	 */
+	@Test
+	public void testExportExcel() throws Exception {
+		ToolManageService toolManageService = (ToolManageService) applicationContext.getBean("toolManageServiceImpl");
+		toolManageService.exportExcel("E:\\toolsInfo.xls");
+	}
 
 }
 

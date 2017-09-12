@@ -1,10 +1,22 @@
 package com.jxt.toolmanage.service;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFCellStyle;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+import com.jxt.category.mapper.CategoryMapper;
+import com.jxt.category.pojo.Category;
 import com.jxt.common.FastDFSClient;
 import com.jxt.toolmanage.mapper.ToolMapper;
 import com.jxt.toolmanage.pojo.QRCodeInfo;
@@ -21,6 +33,8 @@ public class ToolManageServiceImpl implements ToolManageService {
 
 	@Autowired
 	private ToolMapper toolMapper;
+	@Autowired
+	private CategoryMapper categoryMapper;
 	
 	@Value("${QRCODE_WIDTH}")
 	private int QRCODE_WIDTH;
@@ -192,6 +206,128 @@ public class ToolManageServiceImpl implements ToolManageService {
 			toolList.add(toolResult);
 		}
 		return JxtResult.build(200, "编辑成功！", toolList);
+	}
+
+	/*
+	 * 查询所有工器具(non-Javadoc)
+	 * @see com.jxt.toolmanage.service.ToolManageService#getAllTools()
+	 */
+	@Override
+	public List<Tool> getAllTools() {
+		//设置空条件
+		ToolExample example = new ToolExample();
+		//查询
+		List<Tool> tools = toolMapper.selectByExample(example);
+		return tools;
+	}
+
+	/*
+	 * 以excel格式导出工器具信息(non-Javadoc)
+	 * @see com.jxt.toolmanage.service.ToolManageService#exportExcel(java.lang.String)
+	 */
+	@Override
+	public JxtResult exportExcel(String path) throws Exception {
+		this.export(path, this.getAllTools());
+		return JxtResult.ok();
+	}
+	
+	//导出excel格式
+	public void export(String path,List<Tool> toolList) throws Exception {
+		//创建workbook
+		HSSFWorkbook workbook = new HSSFWorkbook();
+		
+		//创建sheet
+		HSSFSheet sheet = workbook.createSheet("工器具信息");
+		
+		//创建表头行，第0行
+		HSSFRow row = sheet.createRow(0);
+		//设置样式为居中
+		HSSFCellStyle style = workbook.createCellStyle();
+		style.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		
+		//创建单元格
+		HSSFCell cell = row.createCell(0);  //第一个
+		cell.setCellValue("所属分类");
+		cell.setCellStyle(style);
+		cell = row.createCell(1);  //第二个
+		cell.setCellValue("编号");
+		cell.setCellStyle(style);
+		cell = row.createCell(2);  //第三个
+		cell.setCellValue("工器具名称");
+		cell.setCellStyle(style);
+		cell = row.createCell(3);  //第四个
+		cell.setCellValue("试验周期(天)");
+		cell.setCellStyle(style);
+		cell = row.createCell(4);  //第五个
+		cell.setCellValue("上次试验日期");
+		cell.setCellStyle(style);
+		cell = row.createCell(5);  //第六个
+		cell.setCellValue("规格类型");
+		cell.setCellStyle(style);
+		cell = row.createCell(6);  //第七个
+		cell.setCellValue("出厂日期");
+		cell.setCellStyle(style);
+		cell = row.createCell(7);  //第八个
+		cell.setCellValue("有效使用周期");
+		cell.setCellStyle(style);
+		cell = row.createCell(8);  //第九个
+		cell.setCellValue("保管与存放要求");
+		cell.setCellStyle(style);
+		cell = row.createCell(9);  //第十个
+		cell.setCellValue("检查与使用要求");
+		cell.setCellStyle(style);
+		cell = row.createCell(10);  //第十一个
+		cell.setCellValue("是否合格");
+		cell.setCellStyle(style);
+		cell = row.createCell(11);  //第十二个
+		cell.setCellValue("状态");
+		cell.setCellStyle(style);
+		
+		//日期格式
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		
+		//插入数据
+		for (int i = 0; i < toolList.size(); i++) {
+			Tool  tool = toolList.get(i);
+			//创建行
+			row = sheet.createRow(i+1);
+			//创建单元格并且添加数据
+			Category category = categoryMapper.selectByPrimaryKey(tool.getCid());
+			row.createCell(0).setCellValue(category.getCategoryName());
+			row.createCell(1).setCellValue(tool.getNumber());
+			row.createCell(2).setCellValue(tool.getToolName());
+			row.createCell(3).setCellValue(tool.getTestPeriod());
+			row.createCell(4).setCellValue(format.format(tool.getLastTestDate()));
+			row.createCell(5).setCellValue(tool.getModelNumber());
+			row.createCell(6).setCellValue(format.format(tool.getCreateDate()));
+			row.createCell(7).setCellValue(tool.getValidUsePeriod());
+			row.createCell(8).setCellValue(tool.getKeepAndDepositRequire());
+			row.createCell(9).setCellValue(tool.getInspectionAndUseRequire());
+			if(tool.getIsQualified() == 0) {
+				row.createCell(10).setCellValue("合格");
+			} else if(tool.getIsQualified() == 1) {
+				row.createCell(10).setCellValue("不合格");
+			}
+			if(tool.getStatus() == 0) {
+				row.createCell(11).setCellValue("正常");
+			} else if (tool.getStatus() == 1) {
+				row.createCell(11).setCellValue("待试验");
+			} else if (tool.getStatus() == 2) {
+				row.createCell(11).setCellValue("正在试验");
+			} else if (tool.getStatus() == 3) {
+				row.createCell(11).setCellValue("待报废");
+			} else if (tool.getStatus() == 4) {
+				row.createCell(11).setCellValue("已报废");
+			} else if (tool.getStatus() == 5) {
+				row.createCell(11).setCellValue("未被领用");
+			} else if (tool.getStatus() == 6) {
+				row.createCell(11).setCellValue("被领用");
+			}
+		}
+		//生成excel文件并且保存到指定目录下
+		FileOutputStream outputStream = new FileOutputStream(path);
+		workbook.write(outputStream);
+		outputStream.close();
 	}
 	
 }

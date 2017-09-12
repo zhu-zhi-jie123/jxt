@@ -167,6 +167,11 @@
 		    <artifactId>validation-api</artifactId>
 		    <version>1.0.0.GA</version>
 		</dependency>
+		<dependency>
+		    <groupId>org.apache.poi</groupId>
+		    <artifactId>poi-ooxml</artifactId>
+		    <version>3.10-FINAL</version>
+		</dependency>
 	</dependencies>
 
 	<build>
