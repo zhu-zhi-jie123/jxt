@@ -27,7 +27,7 @@ public class TestToolGetServiceImpl {
 		toolGet.setGetDate(new Date());
 		toolGet.setNoteNum("8888");
 		toolGet.setReturnDate(new Date());
-		toolGet.setToolids("1,2,6,7,8");
+		toolGet.setToolids("1,2,21,22,23");
 		toolGet.setUserName("竹志杰");
 		toolGet.setWorkBeginDate(new Date());
 		toolGet.setWorkEndDate(new Date());

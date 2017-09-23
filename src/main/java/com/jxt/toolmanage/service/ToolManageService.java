@@ -7,9 +7,10 @@ import com.jxt.utils.JxtResult;
 
 public interface ToolManageService {
 	List<Tool> getToolsByCid(Long cid);
+	List<Tool> getToolsByToolNames(String toolNames);
 	Tool getToolById(Long id);
 	List<Tool> getToolByStatus(Integer status);
-	JxtResult updateStatusById(Long id,Integer status);
+	JxtResult updateStatusByIds(String ids,Integer status);
 	List<Tool> getAllTools();
 	JxtResult addTool(Tool tool) throws Exception;
 	JxtResult addTools(ToolVo toolVo) throws Exception;

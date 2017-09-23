@@ -36,6 +36,16 @@ public class ToolManageController {
 	}
 	
 	/*
+	 * 按名称查询工器具(可同时多个工器具名称，逗号隔开)
+	 */
+	@RequestMapping("/tool/getToolsByToolNames")
+	@ResponseBody
+	public List<Tool> getToolsByToolNames(String toolNames) {
+		List<Tool> tools = toolManageService.getToolsByToolNames(toolNames);
+		return tools;
+	}
+	
+	/*
 	 * 某分类下添加单个工器具
 	 */
 	@RequestMapping("/tool/addTool")
@@ -109,12 +119,12 @@ public class ToolManageController {
 	}
 	
 	/*
-	 * 根据工器具id修改其状态
+	 * 根据工器具id批量修改其状态
 	 */
-	@RequestMapping("/tool/updateStatusById")
+	@RequestMapping("/tool/updateStatusByIds")
 	@ResponseBody
-	public JxtResult updateStatusById(Long id,int status) {
-		JxtResult result = toolManageService.updateStatusById(id, status);
+	public JxtResult updateStatusByIds(String ids,int status) {
+		JxtResult result = toolManageService.updateStatusByIds(ids, status);
 		return result;
 	}
 	

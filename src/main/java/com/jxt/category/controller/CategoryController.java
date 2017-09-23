@@ -26,7 +26,7 @@ public class CategoryController {
 	 */
 	@RequestMapping("/category/getChildByPid")
 	@ResponseBody
-	public List<Category> selectChildByPid(Long pid){
+	public List<Category> getChildByPid(Long pid){
 		List<Category> childList = categoryService.getChildByPid(pid);
 		return childList;
 	}

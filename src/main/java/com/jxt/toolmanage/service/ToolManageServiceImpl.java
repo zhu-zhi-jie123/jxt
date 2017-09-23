@@ -1,9 +1,9 @@
 package com.jxt.toolmanage.service;
 
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.poi.hssf.usermodel.HSSFCell;
@@ -59,6 +59,31 @@ public class ToolManageServiceImpl implements ToolManageService {
 		List<Tool> toolList = toolMapper.selectByExample(example);
 		return toolList;
 	}
+	
+	/*
+	 * 根据工器具名称查询工器具(non-Javadoc)
+	 * @see com.jxt.toolmanage.service.ToolManageService#getToolsByToolName(java.lang.String)
+	 */
+	@Override
+	public List<Tool> getToolsByToolNames(String toolNames) {
+		//创建装结果的List
+		List<Tool> toolList = new ArrayList<Tool>();
+		//将多个工器具名称拆分
+		String[] names = toolNames.split(",");
+		//逐个查询
+		for (String toolName : names) {
+			//设置查询条件
+			ToolExample example = new ToolExample();
+			Criteria criteria = example.createCriteria();
+			criteria.andToolNameEqualTo(toolName);
+			List<Tool> list = toolMapper.selectByExample(example);
+			//将每个查询的结果装入结果List中
+			for (Tool tool : list) {
+				toolList.add(tool);
+			}
+		}
+		return toolList;
+	}
 
 	/*
 	 * 根据id查询工器具(non-Javadoc)
@@ -91,22 +116,31 @@ public class ToolManageServiceImpl implements ToolManageService {
 	 * @see com.jxt.toolmanage.service.ToolManageService#updateStatusById(java.lang.Long, java.lang.Integer)
 	 */
 	@Override
-	public JxtResult updateStatusById(Long id, Integer status) {
-		//根据id查询工器具
-		Tool tool = this.getToolById(id);
-		//修改状态
-		tool.setStatus(status);
-		//修改数据库中的状态
-		toolMapper.updateByPrimaryKey(tool);
-		return JxtResult.build(200, "修改成功", tool);
+	public JxtResult updateStatusByIds(String ids, Integer status) {
+		String[] idStrings = ids.split(",");
+		for (String id : idStrings) {
+			//根据id查询工器具z
+			Tool tool = this.getToolById(Long.parseLong(id));
+			//修改状态
+			tool.setStatus(status);
+			//状态  0:正常，1:待试验，2:正在试验，3:待报废，4:已报废，5:未被领用，6:被领用
+			//如果修改状态为正在试验则需要修改上次试验日期为此时的日期
+			if(status == 2) {
+				tool.setLastTestDate(new Date());
+			}
+			//修改数据库中的状态
+			toolMapper.updateByPrimaryKey(tool);
+		}
+		return JxtResult.build(200, "修改成功");
 	}
+	
 
 	/*
 	 * 添加工器具，同时要生成二维码(non-Javadoc)
 	 * @see com.jxt.toolmanage.service.ToolManageService#addTool(com.jxt.toolmanage.pojo.Tool)
 	 */
 	@Override
-	public JxtResult addTool(Tool tool) throws Exception {
+	public JxtResult addTool(final Tool tool) throws Exception {
 		//补充对象属性
 		tool.setIsQualified(0);  //是否合格    0:合格，1:不合格
 		tool.setStatus(0);  //状态  0:正常，1:待试验，2:正在试验，3:待报废，4:已报废，5:未被领用，6:被领用
@@ -122,7 +156,7 @@ public class ToolManageServiceImpl implements ToolManageService {
 		//设置二维码图片路径
 		tool.setTwoDimensionCode(IMAGE_SERVER_URL+QRCodePath);
 		//插入
-		toolMapper.insert(tool);
+		toolMapper.insert(tool);		
 		return JxtResult.build(200, "添加成功", tool);
 	}
 
@@ -160,6 +194,10 @@ public class ToolManageServiceImpl implements ToolManageService {
 	 */
 	@Override
 	public JxtResult editTool(Tool tool) throws Exception {
+		//补充对象属性
+		if(tool.getIsQualified()==null){
+			tool.setIsQualified(0);  //是否合格    0:合格，1:不合格
+		}
 		//使用用户编辑后的数据创建二维码信息对象
 		QRCodeInfo qrCodeInfo = new QRCodeInfo(tool);
 		//将对象转换成json数据
@@ -188,6 +226,10 @@ public class ToolManageServiceImpl implements ToolManageService {
 		List<Tool> toolList = new ArrayList<Tool>();
 		//遍历需要编辑的工器具列表并逐个编辑
 		for (Tool tool : toolVo.getToolList()) {
+			//补充对象属性
+			if(tool.getIsQualified()==null){
+				tool.setIsQualified(0);  //是否合格    0:合格，1:不合格
+			}
 			//使用用户编辑后的数据创建二维码信息对象
 			QRCodeInfo qrCodeInfo = new QRCodeInfo(tool);
 			//将对象转换成json数据

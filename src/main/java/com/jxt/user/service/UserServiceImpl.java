@@ -12,7 +12,6 @@ import com.jxt.user.pojo.UserExample;
 import com.jxt.user.pojo.UserExample.Criteria;
 import com.jxt.utils.JxtResult;
 
-@Transactional
 @Service
 public class UserServiceImpl implements UserService {
 	

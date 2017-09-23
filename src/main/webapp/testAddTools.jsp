@@ -10,15 +10,15 @@
 <body>
 	<div>
 		<form action="<c:url value='/tool/addTools'/>" method="post" id="test">
-			<c:forEach var="i" begin="0" end="3">
+			<c:forEach var="i" begin="0" end="1">
 				<input name="toolList[${i }].cid" value="2"/>
-				<input name="toolList[${i }].createDate" value="2017-01-01"/>
-				<input name="toolList[${i }].lastTestDate" value="2017-02-01"/>
+				<input name="toolList[${i }].createDate" value="2017-09-22"/>
+				<input name="toolList[${i }].lastTestDate" value="2017-09-22"/>
 				<input name="toolList[${i }].modelNumber" value="888"/>
 				<input name="toolList[${i }].number" value="888"/>
-				<input name="toolList[${i }].testPeriod" value="888"/>
+				<input name="toolList[${i }].testPeriod" value="3"/>
 				<input name="toolList[${i }].toolName" value="888"/>
-				<input name="toolList[${i }].validUsePeriod" value="888"/>
+				<input name="toolList[${i }].validUsePeriod" value="3"/>
 			</c:forEach>
 			<input type="submit" value="提交"/>
 		</form>

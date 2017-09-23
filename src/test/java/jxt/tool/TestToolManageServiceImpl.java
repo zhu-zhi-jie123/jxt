@@ -1,6 +1,7 @@
 package jxt.tool;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -31,13 +32,13 @@ public class TestToolManageServiceImpl {
 		Tool tool = new Tool();
 		tool.setCid((long)2);
 		tool.setCreateDate(new Date());
-		tool.setInspectionAndUseRequire("222");
-		tool.setKeepAndDepositRequire("222");
+		tool.setInspectionAndUseRequire("111");
+		tool.setKeepAndDepositRequire("111");
 		tool.setLastTestDate(new Date());
-		tool.setModelNumber("222");
-		tool.setNumber("222");
+		tool.setModelNumber("111");
+		tool.setNumber("111");
 		tool.setTestPeriod(30);
-		tool.setToolName("222");
+		tool.setToolName("111");
 		tool.setValidUsePeriod(360);
 		ToolManageService toolManageService = (ToolManageService) applicationContext.getBean("toolManageServiceImpl");
 		JxtResult result = toolManageService.addTool(tool);
@@ -82,8 +83,8 @@ public class TestToolManageServiceImpl {
 		tool2.setValidUsePeriod(560);
 		
 		//检查事务（缺少cid则不能插入，前面两个就会回退）
-		Tool tool3 = new Tool();
-		//tool3.setCid((long)4);
+		/*Tool tool3 = new Tool();
+		tool3.setCid((long)4);
 		tool3.setCreateDate(new Date());
 		tool3.setInspectionAndUseRequire("444");
 		tool3.setKeepAndDepositRequire("444");
@@ -92,11 +93,11 @@ public class TestToolManageServiceImpl {
 		tool3.setNumber("444");
 		tool3.setTestPeriod(60);
 		tool3.setToolName("444");
-		tool3.setValidUsePeriod(560);
+		tool3.setValidUsePeriod(560);*/
 		
 		toolList.add(tool1);
 		toolList.add(tool2);
-		toolList.add(tool3);
+		//toolList.add(tool3);
 		toolVo.setToolList(toolList);
 		
 		
@@ -122,7 +123,7 @@ public class TestToolManageServiceImpl {
 	@Test
 	public void testEditTool() throws Exception {
 		Tool tool = new Tool();
-		tool.setId((long)16);
+		tool.setId((long)25);
 		tool.setCreateDate(new Date());
 		tool.setLastTestDate(new Date());
 		tool.setKeepAndDepositRequire("666");
@@ -149,6 +150,84 @@ public class TestToolManageServiceImpl {
 	public void testExportExcel() throws Exception {
 		ToolManageService toolManageService = (ToolManageService) applicationContext.getBean("toolManageServiceImpl");
 		toolManageService.exportExcel("E:\\toolsInfo.xls");
+	}
+	
+	/*
+	 * 测试查询所有工器具
+	 */
+	@Test
+	public void testGetAllTools() {
+		ToolManageService toolManageService = (ToolManageService) applicationContext.getBean("toolManageServiceImpl");
+		List<Tool> tools = toolManageService.getAllTools();
+		for (Tool tool : tools) {
+			System.out.println(tool.getId());
+		}
+	}
+	
+	/*
+	 * 测试根据状态查询工器具
+	 */
+	@Test
+	public void testGetToolsByStatus() {
+		ToolManageService toolManageService = (ToolManageService) applicationContext.getBean("toolManageServiceImpl");
+		List<Tool> tools = toolManageService.getToolByStatus(1);
+		for (Tool tool : tools) {
+			System.out.println(tool.getId());
+		}
+	}
+	
+	/*
+	 * 测试根据id修改其状态
+	 */
+	@Test
+	public void testUpdateStatusById() {
+		ToolManageService toolManageService = (ToolManageService) applicationContext.getBean("toolManageServiceImpl");
+		toolManageService.updateStatusByIds("3",2);
+	}
+	
+	/*
+	 * 测试根据分类查询工器具
+	 */
+	@Test
+	public void testGetToolsByCid() {
+		ToolManageService toolManageService = (ToolManageService) applicationContext.getBean("toolManageServiceImpl");
+		List<Tool> tools = toolManageService.getToolsByCid((long)2);
+		for (Tool tool : tools) {
+			System.out.println(tool.getId());
+		}
+	}
+	
+	/*
+	 * 测试根据工器具名称查询工器具
+	 */
+	@Test
+	public void testGetToolsByToolNames() {
+		ToolManageService toolManageService = (ToolManageService) applicationContext.getBean("toolManageServiceImpl");
+		List<Tool> tools = toolManageService.getToolsByToolNames("888");
+		for (Tool tool : tools) {
+			System.out.println(tool.getId());
+		}
+	}
+	
+	/*
+	 * 测试根据id查询工器具
+	 */
+	@Test
+	public void testGetToolById() {
+		ToolManageService toolManageService = (ToolManageService) applicationContext.getBean("toolManageServiceImpl");
+		Tool tool = toolManageService.getToolById((long)1);
+		System.out.println(tool.getToolName());
+	}
+	
+	/*
+	 * 测试比较日期
+	 */
+	@Test
+	public void testCompareDate() {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(new Date());
+		calendar.add(Calendar.MONTH, +1);
+		System.out.println((new Date().compareTo(calendar.getTime())));
 	}
 
 }
